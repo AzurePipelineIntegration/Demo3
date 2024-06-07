@@ -1,0 +1,49 @@
+#TOSCA scripts run
+parameters:
+- name: toscaTests
+  displayName: Tosca Tests
+  type: object
+
+trigger: none
+
+pool: NonProdWindows
+
+variables:
+  azureSubscription: 'qdigitalcode-devops-spn-BoQDenDevSub-DenovoBank-Subscription'
+  Pega.Uri: 'https://memeqb-dlho-devops.pegacloud.net/prweb/api/ManageDeploymentPipeline/v1'
+  Pipeline.Id: 'Pipeline-JARQ4'
+
+steps:
+- pwsh: |
+    $xmlWriter = New-Object System.XMl.XmlTextWriter("PEGA.xml", $Null)
+    $xmlWriter.Formatting = "Indented"
+    $xmlWriter.Indentation = 1
+    $XmlWriter.IndentChar = "`t"
+    $xmlWriter.WriteStartDocument()
+    $xmlWriter.WriteStartElement('testConfiguration')
+    $xmlWriter.WriteStartElement('TestEvents')
+    $tests = "${{ parameters.toscaTests }}" -split " "
+    foreach ($test in $tests)
+    {
+      $xmlWriter.WriteElementString("TestEvent", $test)
+    }
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteEndDocument()
+    $xmlWriter.Flush()
+    $xmlWriter.Close()
+  displayName: Setup ToscaCI Test XML
+
+- pwsh: |
+    $(System.DefaultWorkingDirectory)\ToscaCIClient\ToscaCIClient.exe -m distributed -c $(System.DefaultWorkingDirectory)\PEGA.xml  -t junit -r $(Common.TestResultsDirectory)\ToscaCI.xml -x True
+  displayName: Run ToscaCI Tests
+  continueOnError: true
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '$(Common.TestResultsDirectory)\ToscaCI.xml'
+    searchFolder: '$(Common.TestResultsDirectory)'
+    failTaskOnFailedTests: true
+    failTaskOnMissingResultsFile: true
+    testRunTitle: 'ToscaCI_TestResults_$(Build.BuildId)'

@@ -1,0 +1,24 @@
+trigger:
+- main
+- release
+
+pool:
+  vmImage: 'windows agent' # Use existing windows agent machine
+
+stages:
+- stage: TOSCAExecution
+  displayName: 'Execute TOSCA Script'
+  jobs:
+  - job: Execute_Tosca_Test
+    displayName: 'Execute Tosca Test Suite'
+    steps:
+    - checkout: self
+    # - script: |
+    #     # Clone the repository containing configXML
+    #     #git clone <URL_of_your_repository_containing_configXML>
+    #     # Run Tosca test suite
+    #     # Replace <path_to_tosca_executable> and <path_to_configXML> with actual paths
+      
+      displayName: 'Execute TOSCA Script'
+
+    # You may need additional steps here for cleanup, reporting, etc.

@@ -1,0 +1,1 @@
+"D:\TRICENTIS\Tosca Testsuite\ToscaCommander\ToscaCI\Client\ToscaCIClient.exe" -m distributed -c "C:\Users\AgarwaRi_P\Desktop\TestEventConfig.xml" -t junit -r "C:\Result\results.xml"
