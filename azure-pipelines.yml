@@ -27,18 +27,7 @@ stages:
       
       displayName: 'Execute TOSCA Script'
 
-    # You may need additional steps here for cleanup, reporting, etc.
-    - task: PublishTestResults@2
-- inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '$(Common.TestResultsDirectory)\ToscaCI.xml'
-    searchFolder: '$(Common.TestResultsDirectory)'
-    failTaskOnFailedTests: true
-    failTaskOnMissingResultsFile: true
-    testRunTitle: 'ToscaCI_TestResults_$(Build.BuildId)'
-- task: PublishBuildArtifacts@1
-  displayName: Publish JUnit reports artifact
-  inputs:
+
     PathtoPublish: '$(Common.TestResultsDirectory)\ToscaCI.xml'
     ArtifactName: 'JUnit_Reports'
     publishLocation: 'Container'
