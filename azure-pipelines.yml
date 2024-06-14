@@ -29,7 +29,7 @@ stages:
 
     # You may need additional steps here for cleanup, reporting, etc.
     - task: PublishTestResults@2
-  inputs:
+- inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '$(Common.TestResultsDirectory)\ToscaCI.xml'
     searchFolder: '$(Common.TestResultsDirectory)'
