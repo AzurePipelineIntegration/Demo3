@@ -20,9 +20,9 @@ stages:
     - checkout: self
     - script: |
     #     # Clone the repository containing configXML
-    git clone <https://github.com/AzurePipelineIntegration/Demo3>
+    # git clone <https://github.com/AzurePipelineIntegration/Demo3>
     #     # Run Tosca test suite
-    "C:\Path\To\TOSCA\executable" "C:\Path\To\TOSCA\script.tosca" -config "\Path\To\config.xml"
+    # "C:\Path\To\TOSCA\executable" "C:\Path\To\TOSCA\script.tosca" -config "\Path\To\config.xml"
     #     # Replace <path_to_tosca_executable> and <path_to_configXML> with actual paths
       
       displayName: 'Execute TOSCA Script'
